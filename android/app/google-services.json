@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1058285679407",
+    "project_id": "furniture-donation-app",
+    "storage_bucket": "furniture-donation-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058285679407:android:34f0625cd41f97a2b3a7da",
+        "android_client_info": {
+          "package_name": "com.example.furniture_donation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1058285679407-ca15ip79bvnoomjkc6h65kamnv3ps240.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXdi5O9hWcgIhvOEOP4f0zTEzqGXgmCMQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1058285679407-ca15ip79bvnoomjkc6h65kamnv3ps240.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
