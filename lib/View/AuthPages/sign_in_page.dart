@@ -51,13 +51,13 @@ class SignInPage extends GetView<SignInController> {
                 ),
                 const SizedBox(height: 16),
                 MainTextField(
-                  controller: TextEditingController(),
+                  controller: controller.emailController,
                   hintText: "Email address",
                 ),
                 const SizedBox(height: 8),
                 Obx(
                   () => MainTextField(
-                    controller: TextEditingController(),
+                    controller: controller.passwordController,
                     hintText: "Password",
                     isPassword: true,
                     isPasswordNotVisible: controller.isPasswordNotVisible.value,
@@ -67,9 +67,7 @@ class SignInPage extends GetView<SignInController> {
                 const SizedBox(height: 16),
                 MainBTN(
                   title: "Sign in",
-                  onPressed: () {
-                    //TODO: Sign in
-                  },
+                  onPressed: controller.sginIn,
                   isFilled: true,
                 ),
               ],

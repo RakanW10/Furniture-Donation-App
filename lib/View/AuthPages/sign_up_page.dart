@@ -75,8 +75,9 @@ class SignUpPage extends GetView<SignUpController> {
                     controller: controller.confirmPasswordController,
                     hintText: "Confirm password",
                     isPassword: true,
-                    isPasswordNotVisible: controller.isPasswordNotVisible.value,
-                    onIconPressed: controller.changePasswordVisibility,
+                    isPasswordNotVisible:
+                        controller.isConfirmPasswordNotVisible.value,
+                    onIconPressed: controller.changeConfirmPasswordVisibility,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -87,9 +88,7 @@ class SignUpPage extends GetView<SignUpController> {
                 const SizedBox(height: 16),
                 MainBTN(
                   title: "Create account",
-                  onPressed: () {
-                    //TODO: Sign in
-                  },
+                  onPressed: controller.signUp,
                   isFilled: true,
                 ),
               ],
