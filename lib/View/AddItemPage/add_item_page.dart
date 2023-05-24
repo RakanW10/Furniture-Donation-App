@@ -122,6 +122,12 @@ class AddItemPage extends GetView<AddItemController> {
             onPressed: () {
               controller.summit();
               Get.back();
+              Get.snackbar(
+                "Success",
+                "Your item has been added successfully",
+                backgroundColor: AppColors.primary,
+                colorText: Colors.white,
+              );
             },
             isFilled: false,
           ),

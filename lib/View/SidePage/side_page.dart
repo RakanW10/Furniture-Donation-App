@@ -95,7 +95,7 @@ class SidePage extends GetView<MainController> {
                       ),
                     ),
                   )
-                : SizedBox(
+                : const SizedBox(
                     height: 55,
                   ),
             const Spacer(
