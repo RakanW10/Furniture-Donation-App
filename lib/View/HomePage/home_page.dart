@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:furniture_donation/Model/AppUser/app_user.dart';
 import 'package:furniture_donation/Router/router_name.dart';
 import 'package:furniture_donation/const.dart';
 import 'package:furniture_donation/style.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

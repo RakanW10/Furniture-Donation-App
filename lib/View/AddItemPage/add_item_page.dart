@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:furniture_donation/Controller/add_item_controller.dart';
 import 'package:furniture_donation/View/AddItemPage/components/image_uploader.dart';
@@ -121,7 +119,10 @@ class AddItemPage extends GetView<AddItemController> {
           const SizedBox(height: 16),
           MainBTN(
             title: "Donate",
-            onPressed: controller.summit,
+            onPressed: () {
+              controller.summit();
+              Get.back();
+            },
             isFilled: false,
           ),
           const SizedBox(height: 16)

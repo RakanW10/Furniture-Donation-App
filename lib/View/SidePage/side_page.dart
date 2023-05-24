@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:furniture_donation/Controller/main_controller.dart';
 import 'package:furniture_donation/style.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class SidePage extends GetView<MainController> {
   const SidePage({super.key});

@@ -1,4 +1,3 @@
-import 'package:furniture_donation/API/database.dart';
 import 'package:furniture_donation/Model/Item/item_model.dart';
 
 class ItemManager {

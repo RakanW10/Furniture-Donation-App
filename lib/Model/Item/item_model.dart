@@ -6,6 +6,8 @@ class Item {
   final String condition;
   final String category;
   final String ownerId;
+  final String ownerName;
+  final String ownerPhoneNumber;
   final bool isAvailable;
 
   Item({
@@ -16,6 +18,8 @@ class Item {
     required this.condition,
     required this.category,
     required this.ownerId,
+    required this.ownerName,
+    required this.ownerPhoneNumber,
     required this.isAvailable,
   });
 
@@ -28,6 +32,8 @@ class Item {
       condition: json['condition'],
       category: json['category'],
       ownerId: json['ownerId'],
+      ownerName: json['ownerName'],
+      ownerPhoneNumber: json['ownerPhoneNumber'],
       isAvailable: json['isAvailable'],
     );
   }
@@ -41,6 +47,8 @@ class Item {
       'condition': condition,
       'category': category,
       'ownerId': ownerId,
+      'ownerName': ownerName,
+      'ownerPhoneNumber': ownerPhoneNumber,
       'isAvailable': isAvailable,
     };
   }

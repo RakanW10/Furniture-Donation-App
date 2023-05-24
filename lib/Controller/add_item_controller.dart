@@ -70,18 +70,12 @@ class AddItemController extends GetxController {
           condition: itemConditionController.text,
           category: category,
           ownerId: appStorage.read('user')!['uid'],
+          ownerName: appStorage.read('user')!['name'],
+          ownerPhoneNumber: appStorage.read('user')!['phoneNumber'],
           imagesUrls: images.map((e) => e!.path).toList(),
           isAvailable: true,
         ),
       );
-      Get.snackbar(
-        'Success',
-        'Item added successfully',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: AppColors.primary,
-        colorText: Colors.white,
-      );
-      Get.back();
     } else {
       Get.snackbar(
         'Error',
