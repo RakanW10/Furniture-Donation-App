@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_donation/API/database.dart';
+import 'package:furniture_donation/Controller/main_controller.dart';
 
 import 'package:furniture_donation/Model/Item/item_model.dart';
 import 'package:furniture_donation/const.dart';
@@ -14,12 +15,15 @@ class AddItemController extends GetxController {
   late TextEditingController itemNameController;
   late TextEditingController itemDescriptionController;
   late TextEditingController itemConditionController;
+  late TextEditingController itemAddressController;
   int categoryIndex = 0;
 
   void pickImages() async {
     try {
+      int i = 1;
       final image = await ImagePicker().pickMultiImage();
       for (var image in image) {
+        if (i == 5) break;
         images.add(File(image.path));
       }
     } catch (e) {
@@ -41,7 +45,7 @@ class AddItemController extends GetxController {
     categoryIndex = index;
   }
 
-  summit() {
+  summit() async {
     if (itemNameController.text.isNotEmpty &&
         itemDescriptionController.text.isNotEmpty &&
         itemConditionController.text.isNotEmpty &&
@@ -61,21 +65,21 @@ class AddItemController extends GetxController {
           category = 'Outdoor';
           break;
       }
-
-      DatabaseService.addItem(
-        item: Item(
-          id: DateTime.now().millisecondsSinceEpoch.toString(),
-          name: itemNameController.text,
-          description: itemDescriptionController.text,
-          condition: itemConditionController.text,
-          category: category,
-          ownerId: appStorage.read('user')!['uid'],
-          ownerName: appStorage.read('user')!['name'],
-          ownerPhoneNumber: appStorage.read('user')!['phoneNumber'],
-          imagesUrls: images.map((e) => e!.path).toList(),
-          isAvailable: true,
-        ),
+      Item tempItem = Item(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        name: itemNameController.text,
+        description: itemDescriptionController.text,
+        condition: itemConditionController.text,
+        address: itemAddressController.text,
+        category: category,
+        ownerId: appStorage.read('user')!['uid'],
+        ownerName: appStorage.read('user')!['name'],
+        ownerPhoneNumber: appStorage.read('user')!['phoneNumber'],
+        imagesUrls: images.map((e) => e!.path).toList(),
+        isAvailable: true,
       );
+      await DatabaseService.addItem(item: tempItem);
+      Get.find<MainController>().allItems.add(tempItem);
     } else {
       Get.snackbar(
         'Error',
@@ -92,6 +96,7 @@ class AddItemController extends GetxController {
     itemNameController = TextEditingController();
     itemDescriptionController = TextEditingController();
     itemConditionController = TextEditingController();
+    itemAddressController = TextEditingController();
     super.onInit();
   }
 
@@ -100,6 +105,7 @@ class AddItemController extends GetxController {
     itemNameController.dispose();
     itemDescriptionController.dispose();
     itemConditionController.dispose();
+    itemAddressController.dispose();
     super.onClose();
   }
 }

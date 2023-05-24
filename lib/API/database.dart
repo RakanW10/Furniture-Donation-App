@@ -1,10 +1,8 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:furniture_donation/Model/Item/item_model.dart';
 import 'package:furniture_donation/Model/AppUser/app_user.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:get/get.dart';
 
 class DatabaseService {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -24,6 +22,19 @@ class DatabaseService {
       AppUser user = AppUser.fromJson(json: userData.data()!);
 
       return user;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<List<Item>> getAllItems() async {
+    try {
+      final itemsData = await _firestore.collection('items').get();
+      List<Item> items = [];
+      for (QueryDocumentSnapshot itemData in itemsData.docs) {
+        items.add(Item.fromJson(itemData.data() as Map<String, dynamic>));
+      }
+      return items;
     } catch (e) {
       rethrow;
     }

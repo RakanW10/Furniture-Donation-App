@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:furniture_donation/API/database.dart';
 import 'package:furniture_donation/Controller/my_items_controller.dart';
 import 'package:furniture_donation/Controller/orders_controller.dart';
+import 'package:furniture_donation/Model/Item/item_model.dart';
 import 'package:furniture_donation/Router/binding_classes.dart';
 import 'package:furniture_donation/View/AboutUsPage/about_us.dart';
 import 'package:furniture_donation/View/HomePage/home_page.dart';
@@ -16,8 +18,13 @@ const List<Widget> screens = [
   AboutUsPage(),
 ];
 
-class MainController extends GetxController {
+class MainController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   Widget currentScreen = const HomePage();
+  List<Item> allItems = [];
+  RxBool isLoading = true.obs;
+  late TabController tabController;
+  RxInt selectedTabIndex = 0.obs;
 
   void changeScreenTo({required BuildContext context, required int pageIndex}) {
     Get.delete<MyItemsController>();
@@ -42,8 +49,22 @@ class MainController extends GetxController {
     ZoomDrawer.of(context)!.close();
   }
 
+  void setTabIndex(int index) {
+    selectedTabIndex.value = index;
+    update();
+  }
+
+  void addItem({required Item item}) {
+    allItems.add(item);
+    update();
+  }
+
   @override
-  void onInit() {
+  void onInit() async {
+    tabController = TabController(length: 4, vsync: this);
+    allItems = await DatabaseService.getAllItems();
+    isLoading.value = false;
+    update();
     super.onInit();
   }
 }

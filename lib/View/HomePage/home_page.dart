@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:furniture_donation/Controller/main_controller.dart';
 import 'package:furniture_donation/Router/router_name.dart';
+import 'package:furniture_donation/View/Components/category_icons.dart';
+import 'package:furniture_donation/View/HomePage/components/tabBodys/bed_room.dart';
+import 'package:furniture_donation/View/HomePage/components/tabBodys/kitchen.dart';
+import 'package:furniture_donation/View/HomePage/components/tabBodys/living_room.dart';
+import 'package:furniture_donation/View/HomePage/components/tabBodys/outdoor.dart';
+import 'package:furniture_donation/View/HomePage/components/tab_container.dart';
 import 'package:furniture_donation/const.dart';
 import 'package:furniture_donation/style.dart';
 import 'package:get/get.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends GetView<MainController> {
   const HomePage({super.key});
 
   @override
@@ -29,8 +36,78 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      body: const Center(
-        child: Text("Home Page"),
+      body: Column(
+        children: [
+          const SizedBox(height: 32),
+          Padding(
+            padding: const EdgeInsets.only(left: 32),
+            child: Obx(
+              () => TabBar(
+                controller: controller.tabController,
+                tabs: [
+                  TabContainer(
+                    iconData: CategoryIcons.couch,
+                    index: 0,
+                    selectedTabIndex: controller.selectedTabIndex.value,
+                  ),
+                  TabContainer(
+                    iconData: CategoryIcons.bedSvgrepoCom_1,
+                    index: 1,
+                    selectedTabIndex: controller.selectedTabIndex.value,
+                  ),
+                  TabContainer(
+                    iconData: CategoryIcons.kitchenRoomSvgrepoCom,
+                    index: 2,
+                    selectedTabIndex: controller.selectedTabIndex.value,
+                  ),
+                  TabContainer(
+                    iconData: CategoryIcons.terracIcon,
+                    index: 3,
+                    selectedTabIndex: controller.selectedTabIndex.value,
+                  ),
+                ],
+                onTap: (index) => controller.setTabIndex(index),
+                isScrollable: true,
+                indicatorColor: AppColors.primary,
+                indicatorSize: TabBarIndicatorSize.label,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: GetBuilder<MainController>(
+              builder: (_) => TabBarView(
+                controller: controller.tabController,
+                children: [
+                  LivingRoom(
+                    myItems: controller.allItems
+                        .where((element) => element.category == "Living Room")
+                        .toList(),
+                    isLoading: controller.isLoading.value,
+                  ),
+                  BedRoom(
+                    myItems: controller.allItems
+                        .where((element) => element.category == "Bed Room")
+                        .toList(),
+                    isLoading: controller.isLoading.value,
+                  ),
+                  Kitchen(
+                    myItems: controller.allItems
+                        .where((element) => element.category == "Kitchen")
+                        .toList(),
+                    isLoading: controller.isLoading.value,
+                  ),
+                  Outdoor(
+                    myItems: controller.allItems
+                        .where((element) => element.category == "Outdoor")
+                        .toList(),
+                    isLoading: controller.isLoading.value,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {

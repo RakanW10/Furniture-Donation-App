@@ -4,6 +4,7 @@ class Item {
   final String description;
   final List<String> imagesUrls;
   final String condition;
+  final String address;
   final String category;
   final String ownerId;
   final String ownerName;
@@ -17,6 +18,7 @@ class Item {
     required this.imagesUrls,
     required this.condition,
     required this.category,
+    required this.address,
     required this.ownerId,
     required this.ownerName,
     required this.ownerPhoneNumber,
@@ -31,6 +33,7 @@ class Item {
       imagesUrls: List<String>.from(json['imagesUrls']),
       condition: json['condition'],
       category: json['category'],
+      address: json['address'],
       ownerId: json['ownerId'],
       ownerName: json['ownerName'],
       ownerPhoneNumber: json['ownerPhoneNumber'],
@@ -45,6 +48,7 @@ class Item {
       'description': description,
       'imagesUrls': imagesUrls,
       'condition': condition,
+      'address': address,
       'category': category,
       'ownerId': ownerId,
       'ownerName': ownerName,

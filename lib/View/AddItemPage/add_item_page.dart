@@ -88,6 +88,20 @@ class AddItemPage extends GetView<AddItemController> {
           ),
           const SizedBox(height: 16),
           const Text(
+            'Address',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 8),
+          MainTextField(
+            controller: controller.itemAddressController,
+            hintText: 'Enter the address',
+          ),
+          const SizedBox(height: 16),
+          const Text(
             'Category',
             style: TextStyle(
               fontSize: 24,
