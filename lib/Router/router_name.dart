@@ -1,5 +1,3 @@
-import 'package:flutter_zoom_drawer/config.dart';
-import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:furniture_donation/Router/binding_classes.dart';
 import 'package:furniture_donation/View/AboutUsPage/about_us.dart';
 import 'package:furniture_donation/View/AuthPages/main_auth_page.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:furniture_donation/Controller/main_ontroller.dart';
 import 'package:furniture_donation/View/SidePage/side_page.dart';
@@ -37,6 +36,7 @@ class MainDrawer extends GetView<MainController> {
         ),
       ],
       menuBackgroundColor: AppColors.primary,
+      mainScreenTapClose: true,
     );
   }
 }
