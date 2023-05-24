@@ -24,5 +24,10 @@ ThemeData appTheme() {
         enableFeedback: false,
       ),
     ),
+    inputDecorationTheme: const InputDecorationTheme(
+      counterStyle: TextStyle(
+        color: Colors.white,
+      ),
+    ),
   );
 }

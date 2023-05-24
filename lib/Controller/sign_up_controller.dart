@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture_donation/API/auth.dart';
 import 'package:furniture_donation/API/database.dart';
-import 'package:furniture_donation/Model/app_user.dart';
+import 'package:furniture_donation/Model/AppUser/app_user.dart';
+import 'package:furniture_donation/const.dart';
 import 'package:furniture_donation/style.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class SignUpController extends GetxController {
   final isPasswordNotVisible = true.obs;
@@ -81,9 +81,10 @@ class SignUpController extends GetxController {
           phoneNumber: phoneNumberController.text,
         );
         // Save user to local storage
-        GetStorage().write("user", user.toJson());
+        appStorage.write("user", user.toJson());
         // Save user to firestore
         DatabaseService.addUser(user: user);
+        // Set current user
 
         Get.snackbar("Success", "Sign up successfully");
       } on FirebaseAuthException catch (e) {

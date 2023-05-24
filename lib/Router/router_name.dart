@@ -1,5 +1,6 @@
 import 'package:furniture_donation/Router/binding_classes.dart';
 import 'package:furniture_donation/View/AboutUsPage/about_us.dart';
+import 'package:furniture_donation/View/AddItemPage/add_item_page.dart';
 import 'package:furniture_donation/View/AuthPages/main_auth_page.dart';
 import 'package:furniture_donation/View/AuthPages/sign_in_page.dart';
 import 'package:furniture_donation/View/AuthPages/sign_up_page.dart';
@@ -48,15 +49,21 @@ final List<GetPage> routerApp = [
     page: () => const MyItemsPage(),
     binding: MyItemsBindings(),
   ),
+  GetPage(
+    name: RouterApp.addItemPage,
+    page: () => const AddItemPage(),
+    binding: AddItemBindings(),
+  ),
 ];
 
 class RouterApp {
   static const String mainAuthPage = '/AuthPages/main_auth_page.dart';
   static const String signInPage = '/AuthPages/sign_in_page';
   static const String signUpPage = '/AuthPages/sign_up_page';
-  static const String homePage = '/home_page';
+  static const String homePage = '/homePage';
   static const String mainDrawer = '/mainDrawer';
   static const String aboutUsPage = '/aboutUsPage';
   static const String myItemsPage = '/myItemsPage';
   static const String ordersPage = '/ordersPage';
+  static const String addItemPage = '/homePage/addItemPage';
 }

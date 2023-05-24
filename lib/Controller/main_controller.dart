@@ -41,4 +41,9 @@ class MainController extends GetxController {
     update();
     ZoomDrawer.of(context)!.close();
   }
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
 }

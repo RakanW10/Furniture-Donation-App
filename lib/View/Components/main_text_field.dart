@@ -9,17 +9,22 @@ class MainTextField extends StatelessWidget {
     this.isPassword = false,
     this.isPasswordNotVisible = true,
     this.onIconPressed,
+    this.maxLines = 1,
+    this.maxLength,
   });
   final TextEditingController controller;
   final String hintText;
   final bool isPassword;
   final bool isPasswordNotVisible;
   final Function()? onIconPressed;
-
+  final int maxLines;
+  final int? maxLength;
   @override
   Widget build(BuildContext context) {
     return TextField(
+      
       controller: controller,
+      
       cursorColor: AppColors.primary,
       decoration: InputDecoration(
         hintText: hintText,
@@ -51,6 +56,8 @@ class MainTextField extends StatelessWidget {
         suffixIconColor: AppColors.primary,
       ),
       obscureText: isPasswordNotVisible && isPassword,
+      maxLines: maxLines,
+      maxLength: maxLength,
     );
   }
 }

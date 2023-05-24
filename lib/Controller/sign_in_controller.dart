@@ -2,10 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture_donation/API/Auth.dart';
 import 'package:furniture_donation/API/database.dart';
-import 'package:furniture_donation/Model/app_user.dart';
+import 'package:furniture_donation/Model/AppUser/app_user.dart';
+import 'package:furniture_donation/const.dart';
 import 'package:furniture_donation/style.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class SignInController extends GetxController {
   final isPasswordNotVisible = true.obs;
@@ -37,8 +37,10 @@ class SignInController extends GetxController {
           emailAddress: emailController.text,
           password: passwordController.text,
         );
+        // save user data in local storage
         user = await DatabaseService.getUser(uid: userCredential.user!.uid);
-        GetStorage().write('user', user.toJson());
+        appStorage.write('user', user.toJson());
+        
       } catch (e) {
         Get.snackbar(
           "Error",
