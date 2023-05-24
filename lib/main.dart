@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: RouterApp.mainAuthPage,
+      initialRoute: RouterApp.mainDrawer,
       getPages: routerApp,
       theme: appTheme(),
     );

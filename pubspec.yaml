@@ -18,12 +18,18 @@ dependencies:
   firebase_core: ^2.13.0
   firebase_auth: ^4.6.1
   cloud_firestore: ^4.7.1
+  flutter_launcher_icons: ^0.13.1
+  flutter_zoom_drawer: ^3.0.4+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/AppLogo.png"
 
 flutter:
   uses-material-design: true
