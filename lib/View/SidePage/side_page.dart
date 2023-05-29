@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_donation/Controller/main_controller.dart';
+import 'package:furniture_donation/Router/router_name.dart';
+import 'package:furniture_donation/const.dart';
 import 'package:furniture_donation/style.dart';
 import 'package:get/get.dart';
 
@@ -16,20 +18,51 @@ class SidePage extends GetView<MainController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Spacer(),
-            const Row(
-              children: [
-                CircleAvatar(
-                  radius: 30,
-                ),
-                SizedBox(width: 16),
-                Text(
-                  "User Name",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ),
-              ],
+            GetBuilder<MainController>(
+              builder: (_) => controller.user == null
+                  ? Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.person,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                        const Expanded(flex: 1, child: SizedBox()),
+                        Expanded(
+                          flex: 20,
+                          child: InkWell(
+                            onTap: () {
+                              Get.toNamed(RouterApp.mainAuthPage);
+                            },
+                            child: const Text(
+                              "Sgin in/Sign up",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: 30,
+                        ),
+                        const SizedBox(width: 16),
+                        Text(
+                          controller.user!.name,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
+                    ),
             ),
             const SizedBox(height: 16),
             ...[
@@ -74,30 +107,42 @@ class SidePage extends GetView<MainController> {
             const Spacer(
               flex: 2,
             ),
-            true
-                ? InkWell(
-                    onTap: () {
-                      //TODO: Sign Out
-                    },
-                    child: ListTile(
-                      title: Text(
-                        "Sign Out",
-                        style: TextStyle(
+            GetBuilder<MainController>(
+              builder: (_) => controller.user != null
+                  ? InkWell(
+                      onTap: () {
+                        //TODO: Sign Out
+                      },
+                      child: ListTile(
+                        onTap: () {
+                          appStorage.remove("user");
+                          Get.offAllNamed(RouterApp.mainDrawer);
+                          Get.snackbar(
+                            "Loged out",
+                            "You are logged out successfully.",
+                            backgroundColor: AppColors.primary,
+                            colorText: Colors.white,
+                          );
+                        },
+                        title: Text(
+                          "Sign Out",
+                          style: TextStyle(
+                            color: Colors.red[400],
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        leading: Icon(
+                          Icons.logout,
                           color: Colors.red[400],
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
+                          size: 30,
                         ),
                       ),
-                      leading: Icon(
-                        Icons.logout,
-                        color: Colors.red[400],
-                        size: 30,
-                      ),
+                    )
+                  : const SizedBox(
+                      height: 55,
                     ),
-                  )
-                : const SizedBox(
-                    height: 55,
-                  ),
+            ),
             const Spacer(
               flex: 1,
             )

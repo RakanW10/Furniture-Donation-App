@@ -1,5 +1,6 @@
 import 'package:furniture_donation/Controller/add_item_controller.dart';
 import 'package:furniture_donation/Controller/main_controller.dart';
+import 'package:furniture_donation/Controller/my_items_controller.dart';
 import 'package:furniture_donation/Controller/orders_controller.dart';
 import 'package:furniture_donation/Controller/sign_in_controller.dart';
 import 'package:furniture_donation/Controller/sign_up_controller.dart';
@@ -29,7 +30,7 @@ class MainBindings extends Bindings {
 class MyItemsBindings extends Bindings {
   @override
   void dependencies() {
-    Get.put(MyItemsBindings());
+    Get.put(MyItemsController());
   }
 }
 

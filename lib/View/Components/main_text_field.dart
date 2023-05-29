@@ -22,9 +22,7 @@ class MainTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      
       controller: controller,
-      
       cursorColor: AppColors.primary,
       decoration: InputDecoration(
         hintText: hintText,

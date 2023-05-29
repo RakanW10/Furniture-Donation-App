@@ -16,7 +16,7 @@ class SignInController extends GetxController {
     isPasswordNotVisible.value = !isPasswordNotVisible.value;
   }
 
-  void sginIn() async {
+  Future<bool> sginIn() async {
     if (emailController.text.isEmpty) {
       Get.snackbar(
         "Error",
@@ -40,7 +40,7 @@ class SignInController extends GetxController {
         // save user data in local storage
         user = await DatabaseService.getUser(uid: userCredential.user!.uid);
         appStorage.write('user', user.toJson());
-        
+        return true;
       } catch (e) {
         Get.snackbar(
           "Error",
@@ -50,6 +50,7 @@ class SignInController extends GetxController {
         );
       }
     }
+    return false;
   }
 
   @override

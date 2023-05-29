@@ -16,7 +16,6 @@ class DatabaseService {
   }
 
   static Future<AppUser> getUser({required String uid}) async {
-    print(uid);
     try {
       final userData = await _firestore.collection('users').doc(uid).get();
       AppUser user = AppUser.fromJson(json: userData.data()!);
@@ -66,5 +65,21 @@ class DatabaseService {
     } catch (e) {
       rethrow;
     }
+  }
+
+  static Future<List<Item>> getUserItems({required String uid}) async {
+    List<Item> items = [];
+    try {
+      _firestore
+          .collection('users')
+          .doc(uid)
+          .get()
+          .then((userData) => userData.data()!['myItems'].forEach((item) {
+                items.add(Item.fromJson(item));
+              }));
+    } catch (e) {
+      rethrow;
+    }
+    return Future.value(items);
   }
 }

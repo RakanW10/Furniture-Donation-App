@@ -8,10 +8,7 @@ import 'package:get_storage/get_storage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  GetStorage.init();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await init();
   runApp(const MyApp());
 }
 
@@ -27,4 +24,11 @@ class MyApp extends StatelessWidget {
       theme: appTheme(),
     );
   }
+}
+
+init() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await GetStorage.init();
 }
