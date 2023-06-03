@@ -8,6 +8,7 @@ import 'package:furniture_donation/View/HomePage/home_page.dart';
 import 'package:furniture_donation/View/MainDrawer/main_drawer.dart';
 import 'package:furniture_donation/View/MyItemsPage/my_items_page.dart';
 import 'package:furniture_donation/View/OrdersPage/orders_page.dart';
+import 'package:furniture_donation/View/SearchPage/search_page.dart';
 import 'package:get/get.dart';
 
 final List<GetPage> routerApp = [
@@ -54,6 +55,11 @@ final List<GetPage> routerApp = [
     page: () => const AddItemPage(),
     binding: AddItemBindings(),
   ),
+  GetPage(
+    name: RouterApp.searchPage,
+    page: () => const SearchPage(),
+    binding: SearchBindings(),
+  ),
 ];
 
 class RouterApp {
@@ -66,4 +72,5 @@ class RouterApp {
   static const String myItemsPage = '/myItemsPage';
   static const String ordersPage = '/ordersPage';
   static const String addItemPage = '/homePage/addItemPage';
+  static const String searchPage = '/homePage/searchPage';
 }

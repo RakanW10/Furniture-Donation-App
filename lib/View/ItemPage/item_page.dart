@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:furniture_donation/Controller/main_controller.dart';
 import 'package:furniture_donation/View/Components/main_btn.dart';
 import 'package:furniture_donation/style.dart';
 import 'package:get/get.dart';
 
-class ItemPage extends GetView<MainController> {
-  const ItemPage({super.key, required this.index});
-  final int index;
+class ItemPage extends StatelessWidget {
+  const ItemPage({
+    super.key,
+    required this.imagesUrls,
+    required this.name,
+    required this.description,
+    required this.condition,
+    required this.address,
+    required this.ownerName,
+    required this.ownerPhoneNumber,
+  });
+  final List<String> imagesUrls;
+  final String name;
+  final String description;
+  final String condition;
+  final String address;
+  final String ownerName;
+  final String ownerPhoneNumber;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +36,7 @@ class ItemPage extends GetView<MainController> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 image: DecorationImage(
-                  image: NetworkImage(controller.allItems[index].imagesUrls[0]),
+                  image: NetworkImage(imagesUrls[0]),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -53,7 +68,7 @@ class ItemPage extends GetView<MainController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  controller.allItems[index].name,
+                  name,
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -62,7 +77,7 @@ class ItemPage extends GetView<MainController> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  controller.allItems[index].description,
+                  description,
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
@@ -79,7 +94,7 @@ class ItemPage extends GetView<MainController> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  "  ${controller.allItems[index].condition}",
+                  "  $condition",
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
@@ -94,7 +109,7 @@ class ItemPage extends GetView<MainController> {
                     )),
                 const SizedBox(height: 4),
                 Text(
-                  "  ${controller.allItems[index].address}",
+                  "  $address",
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
@@ -109,13 +124,13 @@ class ItemPage extends GetView<MainController> {
                     )),
                 const SizedBox(height: 4),
                 Text(
-                  "  ${controller.allItems[index].ownerName}",
+                  "  $ownerName",
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
                   ),
                 ),
-                Text("  ${controller.allItems[index].ownerPhoneNumber}",
+                Text("  $ownerPhoneNumber",
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.white,
@@ -126,8 +141,12 @@ class ItemPage extends GetView<MainController> {
           const Spacer(),
           Padding(
             padding: const EdgeInsets.all(16),
-            child:
-                MainBTN(title: "Interest", onPressed: () {}, isFilled: false),
+            child: MainBTN(
+                title: "Interest",
+                onPressed: () {
+                  // TODO: Add interest functionality
+                },
+                isFilled: false),
           ),
         ],
       )),

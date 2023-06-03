@@ -11,6 +11,7 @@ class MainTextField extends StatelessWidget {
     this.onIconPressed,
     this.maxLines = 1,
     this.maxLength,
+    this.onEditingComplete,
   });
   final TextEditingController controller;
   final String hintText;
@@ -19,10 +20,12 @@ class MainTextField extends StatelessWidget {
   final Function()? onIconPressed;
   final int maxLines;
   final int? maxLength;
+  final Function()? onEditingComplete;
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      onEditingComplete: onEditingComplete,
       cursorColor: AppColors.primary,
       decoration: InputDecoration(
         hintText: hintText,

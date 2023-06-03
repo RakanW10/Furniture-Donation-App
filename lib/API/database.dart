@@ -70,13 +70,40 @@ class DatabaseService {
   static Future<List<Item>> getUserItems({required String uid}) async {
     List<Item> items = [];
     try {
-      _firestore
-          .collection('users')
-          .doc(uid)
+      await _firestore.collection('users').doc(uid).get().then(
+        (userData) {
+          if (userData.exists) {
+            for (Map<String, dynamic> itemData in userData.data()!['myItems']) {
+              items.add(Item.fromJson(itemData));
+            }
+          } else {
+            throw FirebaseException(
+              plugin: 'Firestore',
+              message: 'User with this id does not exist',
+            );
+          }
+        },
+      );
+    } catch (e) {
+      rethrow;
+    }
+    return Future.value(items);
+  }
+
+  static Future<List<Item>> searchItems({required String query}) async {
+    List<Item> items = [];
+    try {
+      await _firestore
+          .collection('items') //!Double check the search technique
+          .where('name', isGreaterThanOrEqualTo: query)
           .get()
-          .then((userData) => userData.data()!['myItems'].forEach((item) {
-                items.add(Item.fromJson(item));
-              }));
+          .then(
+        (itemsData) {
+          for (QueryDocumentSnapshot itemData in itemsData.docs) {
+            items.add(Item.fromJson(itemData.data() as Map<String, dynamic>));
+          }
+        },
+      );
     } catch (e) {
       rethrow;
     }

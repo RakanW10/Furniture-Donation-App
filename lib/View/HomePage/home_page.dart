@@ -35,6 +35,23 @@ class HomePage extends GetView<MainController> {
             ),
           ),
         ),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(top: 20, right: 20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(40),
+              color: Colors.white,
+            ),
+            child: IconButton(
+              onPressed: () => Get.toNamed(RouterApp.searchPage),
+              icon: const Icon(
+                Icons.search,
+                size: 24,
+              ),
+            ),
+          ),
+        ],
+        actionsIconTheme: const IconThemeData(size: 45),
       ),
       body: Column(
         children: [

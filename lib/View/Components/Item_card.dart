@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:furniture_donation/View/ItemPage/item_page.dart';
 import 'package:furniture_donation/style.dart';
-import 'package:get/get.dart';
 
 class ItemCard extends StatelessWidget {
   const ItemCard({
@@ -11,6 +9,7 @@ class ItemCard extends StatelessWidget {
     required this.name,
     required this.condition,
     required this.address,
+    required this.onTap,
   });
 
   final int index;
@@ -18,13 +17,12 @@ class ItemCard extends StatelessWidget {
   final String name;
   final String condition;
   final String address;
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Get.to(ItemPage(index: index));
-      },
+      onTap: onTap,
       child: Container(
         margin: const EdgeInsets.all(8),
         clipBehavior: Clip.hardEdge,
