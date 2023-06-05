@@ -3,6 +3,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:furniture_donation/Controller/my_items_controller.dart';
 import 'package:furniture_donation/View/Components/Item_card.dart';
 import 'package:furniture_donation/View/Components/empty_container.dart';
+import 'package:furniture_donation/View/ItemPage/item_page.dart';
 import 'package:furniture_donation/style.dart';
 import 'package:get/get.dart';
 
@@ -46,7 +47,20 @@ class MyItemsPage extends GetView<MyItemsController> {
                     name: controller.myItems[index].name,
                     condition: controller.myItems[index].condition,
                     address: controller.myItems[index].address,
-                    onTap: () {},
+                    onTap: () {
+                      // Get.to(
+                      //   () => ItemPage(
+                      //     // imagesUrls: controller.myItems[index].imagesUrls,
+                      //     // name: controller.myItems[index].name,
+                      //     // description: controller.myItems[index].description,
+                      //     // condition: controller.myItems[index].condition,
+                      //     // address: controller.myItems[index].address,
+                      //     // ownerName: controller.myItems[index].ownerName,
+                      //     // ownerPhoneNumber:
+                      //     //     controller.myItems[index].ownerPhoneNumber,
+                      //   ),
+                      // );
+                    },
                   ),
                 ),
                 onEmpty: const EmptyContainer(text: "No items found"),

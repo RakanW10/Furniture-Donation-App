@@ -1,4 +1,5 @@
 import 'package:furniture_donation/Controller/add_item_controller.dart';
+import 'package:furniture_donation/Controller/item_page_controller.dart';
 import 'package:furniture_donation/Controller/main_controller.dart';
 import 'package:furniture_donation/Controller/my_items_controller.dart';
 import 'package:furniture_donation/Controller/orders_controller.dart';
@@ -53,5 +54,12 @@ class SearchBindings extends Bindings {
   @override
   void dependencies() {
     Get.put(SearchPageController());
+  }
+}
+
+class ItemPageBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.put(ItemPageController());
   }
 }

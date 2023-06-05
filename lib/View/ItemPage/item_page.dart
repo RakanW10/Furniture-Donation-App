@@ -1,4 +1,6 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:furniture_donation/Model/Item/item_model.dart';
 import 'package:furniture_donation/View/Components/main_btn.dart';
 import 'package:furniture_donation/style.dart';
 import 'package:get/get.dart';
@@ -6,22 +8,9 @@ import 'package:get/get.dart';
 class ItemPage extends StatelessWidget {
   const ItemPage({
     super.key,
-    required this.imagesUrls,
-    required this.name,
-    required this.description,
-    required this.condition,
-    required this.address,
-    required this.ownerName,
-    required this.ownerPhoneNumber,
+    required this.item,
   });
-  final List<String> imagesUrls;
-  final String name;
-  final String description;
-  final String condition;
-  final String address;
-  final String ownerName;
-  final String ownerPhoneNumber;
-
+  final Item item;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,45 +19,59 @@ class ItemPage extends StatelessWidget {
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Stack(children: [
-            Container(
-              height: 250,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                image: DecorationImage(
-                  image: NetworkImage(imagesUrls[0]),
-                  fit: BoxFit.cover,
+          Stack(
+            children: [
+              CarouselSlider(
+                carouselController: CarouselController(),
+                options: CarouselOptions(
+                  height: 250.0,
+                  viewportFraction: 1,
+                  enableInfiniteScroll: false,
+                  initialPage: 0,
                 ),
+                items: item.imagesUrls
+                    .map(
+                      (imageURL) => Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          image: DecorationImage(
+                            image: NetworkImage(imageURL),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
-            ),
-            Positioned(
-              top: 20,
-              left: 20,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
-                  color: Colors.white,
-                ),
-                child: IconButton(
-                  onPressed: () => Get.back(),
-                  icon: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      size: 24,
+              Positioned(
+                top: 20,
+                left: 20,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    color: Colors.white,
+                  ),
+                  child: IconButton(
+                    onPressed: () => Get.back(),
+                    icon: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: Icon(
+                        Icons.arrow_back_ios,
+                        size: 24,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ]),
+            ],
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  name,
+                  item.name,
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -77,7 +80,7 @@ class ItemPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  description,
+                  item.description,
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
@@ -94,7 +97,7 @@ class ItemPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  "  $condition",
+                  "  ${item.condition}",
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
@@ -109,7 +112,7 @@ class ItemPage extends StatelessWidget {
                     )),
                 const SizedBox(height: 4),
                 Text(
-                  "  $address",
+                  "  ${item.address}",
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
@@ -124,17 +127,19 @@ class ItemPage extends StatelessWidget {
                     )),
                 const SizedBox(height: 4),
                 Text(
-                  "  $ownerName",
+                  "  ${item.ownerName}",
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
                   ),
                 ),
-                Text("  $ownerPhoneNumber",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    )),
+                Text(
+                  "  ${item.ownerPhoneNumber}",
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
               ],
             ),
           ),

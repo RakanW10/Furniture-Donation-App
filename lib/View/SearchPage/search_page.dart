@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_donation/Controller/search_page_controller.dart';
+import 'package:furniture_donation/Router/router_name.dart';
 import 'package:furniture_donation/View/Components/Item_card.dart';
 import 'package:furniture_donation/View/Components/empty_container.dart';
 import 'package:furniture_donation/View/Components/main_text_field.dart';
@@ -69,17 +70,11 @@ class SearchPage extends GetView<SearchPageController> {
                   onTap: () async {
                     FocusScope.of(context).unfocus();
                     await Future.delayed(const Duration(milliseconds: 200));
-                    Get.to(
-                      () => ItemPage(
-                        imagesUrls: controller.searchResult[index].imagesUrls,
-                        name: controller.searchResult[index].name,
-                        description: controller.searchResult[index].description,
-                        condition: controller.searchResult[index].condition,
-                        address: controller.searchResult[index].address,
-                        ownerName: controller.searchResult[index].ownerName,
-                        ownerPhoneNumber:
-                            controller.searchResult[index].ownerPhoneNumber,
-                      ),
+                    Get.toNamed(
+                      RouterApp.itemPage,
+                      arguments: {
+                        "item": controller.searchResult[index],
+                      },
                     );
                   },
                 ),
