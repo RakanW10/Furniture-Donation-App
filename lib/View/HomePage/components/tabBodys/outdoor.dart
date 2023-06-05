@@ -3,7 +3,6 @@ import 'package:furniture_donation/Model/Item/item_model.dart';
 import 'package:furniture_donation/Router/router_name.dart';
 import 'package:furniture_donation/View/Components/Item_card.dart';
 import 'package:furniture_donation/View/Components/logo_big.dart';
-import 'package:furniture_donation/View/ItemPage/item_page.dart';
 import 'package:get/get.dart';
 
 class Outdoor extends StatelessWidget {
