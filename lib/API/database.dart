@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:furniture_donation/Model/Item/item_model.dart';
 import 'package:furniture_donation/Model/AppUser/app_user.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:furniture_donation/Model/Order/order_model.dart';
 
 class DatabaseService {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -50,6 +51,17 @@ class DatabaseService {
       });
 
       await _firestore.collection('items').doc(item.id).set(item.toJson());
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<void> deleteItem({required Item item}) async {
+    try {
+      await _firestore.collection('users').doc(item.ownerId).update({
+        'myItems': FieldValue.arrayRemove([item.toJson()])
+      });
+      await _firestore.collection('items').doc(item.id).delete();
     } catch (e) {
       rethrow;
     }
@@ -108,5 +120,126 @@ class DatabaseService {
       rethrow;
     }
     return Future.value(items);
+  }
+
+  static Future<List<OrderModel>> getUserOrders({required String uid}) async {
+    List<OrderModel> orders = [];
+    try {
+      var userData = await _firestore.collection('users').doc(uid).get();
+      if (userData.data()!['myOrders'] == null) return Future.value(orders);
+      for (String orderId in userData.data()!['myOrders']) {
+        var orderData =
+            await _firestore.collection('orders').doc(orderId).get();
+        orders
+            .add(OrderModel.fromJson(orderData.data() as Map<String, dynamic>));
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return Future.value(orders);
+  }
+
+  static Future<OrderModel> getOrderbyId({required String orderId}) async {
+    try {
+      var orderData = await _firestore.collection('orders').doc(orderId).get();
+      OrderModel order =
+          OrderModel.fromJson(orderData.data() as Map<String, dynamic>);
+      return order;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<void> putNewOrder({required OrderModel order}) async {
+    try {
+      // Order
+      await _firestore.collection('orders').doc(order.id).set(order.toJson());
+      // Owner
+      await _firestore.collection('users').doc(order.ownerUid).update({
+        'myOrders': FieldValue.arrayUnion([order.id])
+      });
+      // Buyer
+      await _firestore.collection('users').doc(order.buyerId).update({
+        'myOrders': FieldValue.arrayUnion([order.id])
+      });
+      // Item
+      await _firestore.collection('items').doc(order.itemUid).update({
+        "isAvailable": false,
+      });
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  static Future<bool> isItemAvailable({required String itemId}) async {
+    var isAvailable = false;
+    try {
+      await _firestore.collection('items').doc(itemId).get().then((itemData) {
+        if (itemData.exists) {
+          if (itemData.data()!['isAvailable'] == true) {
+            isAvailable = true;
+          } else {
+            isAvailable = false;
+          }
+        } else {
+          isAvailable = false;
+        }
+      });
+    } catch (e) {
+      rethrow;
+    }
+    return Future.value(isAvailable);
+  }
+
+  static Future<void> updateStatusWithAcceeptOwner(
+      {required OrderModel order}) async {
+    try {
+      // Order
+      await _firestore.collection('orders').doc(order.id).update({
+        'status': OrderStatus.accepted.toString().split(".").last,
+      });
+    } catch (e) {
+      rethrow;
+    }
+    return Future.value();
+  }
+
+  static Future<void> updateStatusWithRejectOwner(
+      {required OrderModel order}) async {
+    try {
+      // Order
+      await _firestore.collection('orders').doc(order.id).update({
+        'status': OrderStatus.rejected.toString().split(".").last,
+      });
+      // Item
+      await _firestore.collection('items').doc(order.itemUid).update({
+        'isAvailable': true,
+      });
+    } catch (e) {
+      rethrow;
+    }
+    return Future.value();
+  }
+
+  static Future<void> updateStatusWithRejectBuyer(
+      {required OrderModel order}) async {
+    try {
+      // Order
+      await _firestore.collection('orders').doc(order.id).delete();
+      // Item
+      await _firestore.collection('items').doc(order.itemUid).update({
+        'isAvailable': true,
+      });
+      // Owner
+      await _firestore.collection('users').doc(order.ownerUid).update({
+        'myOrders': FieldValue.arrayRemove([order.id])
+      });
+      // Buyer
+      await _firestore.collection('users').doc(order.buyerId).update({
+        'myOrders': FieldValue.arrayRemove([order.id])
+      });
+    } catch (e) {
+      rethrow;
+    }
   }
 }

@@ -68,6 +68,7 @@ final List<GetPage> routerApp = [
       var _args = Get.arguments;
       return ItemPage(
         item: _args["item"],
+        isMyItem: _args["isMyItem"],
       );
     },
     arguments: const {"item": Item, "Index": String},

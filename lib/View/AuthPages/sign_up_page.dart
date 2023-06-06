@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_donation/Controller/sign_up_controller.dart';
+import 'package:furniture_donation/Router/router_name.dart';
 import 'package:furniture_donation/View/Components/logo_big.dart';
 import 'package:furniture_donation/View/Components/main_BTN.dart';
 import 'package:furniture_donation/View/Components/main_text_field.dart';
@@ -88,7 +89,12 @@ class SignUpPage extends GetView<SignUpController> {
                 const SizedBox(height: 16),
                 MainBTN(
                   title: "Create account",
-                  onPressed: controller.signUp,
+                  onPressed: () async {
+                    bool isSginedIn = await controller.signUp();
+                    if (isSginedIn) {
+                      Get.offAllNamed(RouterApp.mainDrawer);
+                    }
+                  },
                   isFilled: true,
                 ),
               ],

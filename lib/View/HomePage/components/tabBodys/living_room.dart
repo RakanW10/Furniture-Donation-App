@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:furniture_donation/Model/AppUser/app_user.dart';
 import 'package:furniture_donation/Model/Item/item_model.dart';
 import 'package:furniture_donation/Router/router_name.dart';
 import 'package:furniture_donation/View/Components/Item_card.dart';
 import 'package:furniture_donation/View/Components/logo_big.dart';
+import 'package:furniture_donation/const.dart';
 import 'package:get/get.dart';
 
 class LivingRoom extends StatelessWidget {
@@ -40,10 +42,22 @@ class LivingRoom extends StatelessWidget {
                   name: myItems[index].name,
                   condition: myItems[index].condition,
                   address: myItems[index].address,
-                  onTap: () => Get.toNamed(
-                    RouterApp.itemPage,
-                    arguments: {"item": myItems[index]},
-                  ),
+                  onTap: () async {
+                    bool isMyItem = false;
+                    var userData = await appStorage.read("user");
+                    if (userData == null) {
+                      isMyItem = false;
+                    } else {
+                      AppUser user = AppUser.fromJson(json: userData);
+                      if (user.uid == myItems[index].ownerId) {
+                        isMyItem = true;
+                      }
+                    }
+                    Get.toNamed(
+                      RouterApp.itemPage,
+                      arguments: {"item": myItems[index], "isMyItem": isMyItem},
+                    );
+                  },
                 ),
               );
   }

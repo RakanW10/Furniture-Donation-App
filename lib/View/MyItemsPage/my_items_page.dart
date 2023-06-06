@@ -51,7 +51,7 @@ class MyItemsPage extends GetView<MyItemsController> {
                       RouterApp.itemPage,
                       arguments: {
                         "item": controller.myItems[index],
-                        "Index": index
+                        "isMyItem": true,
                       },
                     ),
                   ),

@@ -1,7 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:furniture_donation/API/database.dart';
+import 'package:furniture_donation/Model/AppUser/app_user.dart';
 import 'package:furniture_donation/Model/Item/item_model.dart';
+import 'package:furniture_donation/Model/Order/order_model.dart';
 import 'package:furniture_donation/View/Components/main_btn.dart';
+import 'package:furniture_donation/const.dart';
 import 'package:furniture_donation/style.dart';
 import 'package:get/get.dart';
 
@@ -9,8 +13,10 @@ class ItemPage extends StatelessWidget {
   const ItemPage({
     super.key,
     required this.item,
+    required this.isMyItem,
   });
   final Item item;
+  final bool isMyItem;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,12 +110,14 @@ class ItemPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Text("Address",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    )),
+                const Text(
+                  "Address",
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
                 const SizedBox(height: 4),
                 Text(
                   "  ${item.address}",
@@ -134,7 +142,7 @@ class ItemPage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "  ${item.ownerPhoneNumber}",
+                  "  ${isMyItem ? item.ownerPhoneNumber : "05x xxx xxxx"}",
                   style: const TextStyle(
                     fontSize: 16,
                     color: Colors.white,
@@ -146,12 +154,64 @@ class ItemPage extends StatelessWidget {
           const Spacer(),
           Padding(
             padding: const EdgeInsets.all(16),
-            child: MainBTN(
-                title: "Interest",
-                onPressed: () {
-                  // TODO: Add interest functionality
-                },
-                isFilled: false),
+            child: isMyItem
+                ? MainBTN(
+                    title: "Delete",
+                    onPressed: () {
+                      try {
+                        DatabaseService.deleteItem(item: item);
+                      } catch (e) {
+                        Get.snackbar(
+                          "Sorry",
+                          e.toString(),
+                          backgroundColor: AppColors.primary,
+                          colorText: Colors.white,
+                        );
+                      }
+                      Get.back();
+                    },
+                    isFilled: false,
+                  )
+                : MainBTN(
+                    title: "Interest",
+                    onPressed: () async {
+                      Map<String, dynamic>? buyerData = appStorage.read("user");
+                      if (buyerData == null) {
+                        Get.snackbar(
+                          "Sorry",
+                          "You must login first",
+                          backgroundColor: AppColors.primary,
+                          colorText: Colors.white,
+                        );
+                      } else {
+                        AppUser buyer = AppUser.fromJson(json: buyerData);
+                        OrderStatus status = OrderStatus.pending;
+                        OrderModel order = OrderModel(
+                          id: DateTime.now().toString(),
+                          ownerUid: item.ownerId,
+                          ownerName: item.ownerName,
+                          ownerPhoneNumber: item.ownerPhoneNumber,
+                          buyerId: buyer.uid,
+                          buyerName: buyer.name,
+                          buyerPhoneNumber: buyer.phoneNumber,
+                          itemUid: item.id,
+                          itemName: item.name,
+                          itemImageUrl: item.imagesUrls[0],
+                          status: status,
+                        );
+
+                        await DatabaseService.putNewOrder(order: order);
+                        Get.back();
+                        Get.snackbar(
+                          "Success",
+                          "Your request has been sent",
+                          backgroundColor: AppColors.primary,
+                          colorText: Colors.white,
+                        );
+                      }
+                    },
+                    isFilled: false,
+                  ),
           ),
         ],
       )),

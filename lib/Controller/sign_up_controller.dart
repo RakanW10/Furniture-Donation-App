@@ -25,7 +25,7 @@ class SignUpController extends GetxController {
     isConfirmPasswordNotVisible.value = !isConfirmPasswordNotVisible.value;
   }
 
-  void signUp() async {
+  Future<bool> signUp() async {
     if (emailController.text.isEmpty) {
       Get.snackbar(
         "Error",
@@ -86,11 +86,12 @@ class SignUpController extends GetxController {
         DatabaseService.addUser(user: user);
         // Set current user
 
-        Get.snackbar("Success", "Sign up successfully");
+        return true;
       } on FirebaseAuthException catch (e) {
-        Get.snackbar("Error", e.message!);
+        return false;
       }
     }
+    return false;
   }
 
   @override

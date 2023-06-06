@@ -109,34 +109,29 @@ class SidePage extends GetView<MainController> {
             ),
             GetBuilder<MainController>(
               builder: (_) => controller.user != null
-                  ? InkWell(
+                  ? ListTile(
                       onTap: () {
-                        //TODO: Sign Out
+                        appStorage.remove("user");
+                        Get.offAllNamed(RouterApp.mainDrawer);
+                        Get.snackbar(
+                          "Signed out",
+                          "You are signed out successfully.",
+                          backgroundColor: AppColors.primary,
+                          colorText: Colors.white,
+                        );
                       },
-                      child: ListTile(
-                        onTap: () {
-                          appStorage.remove("user");
-                          Get.offAllNamed(RouterApp.mainDrawer);
-                          Get.snackbar(
-                            "Loged out",
-                            "You are logged out successfully.",
-                            backgroundColor: AppColors.primary,
-                            colorText: Colors.white,
-                          );
-                        },
-                        title: Text(
-                          "Sign Out",
-                          style: TextStyle(
-                            color: Colors.red[400],
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        leading: Icon(
-                          Icons.logout,
+                      title: Text(
+                        "Sign Out",
+                        style: TextStyle(
                           color: Colors.red[400],
-                          size: 30,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
+                      ),
+                      leading: Icon(
+                        Icons.logout,
+                        color: Colors.red[400],
+                        size: 30,
                       ),
                     )
                   : const SizedBox(

@@ -98,25 +98,33 @@ class HomePage extends GetView<MainController> {
                 children: [
                   LivingRoom(
                     myItems: controller.allItems
-                        .where((element) => element.category == "Living Room")
+                        .where((element) =>
+                            element.category == "Living Room" &&
+                            element.isAvailable == true)
                         .toList(),
                     isLoading: controller.isLoading.value,
                   ),
                   BedRoom(
                     myItems: controller.allItems
-                        .where((element) => element.category == "Bed Room")
+                        .where((element) =>
+                            element.category == "Bed Room" &&
+                            element.isAvailable == true)
                         .toList(),
                     isLoading: controller.isLoading.value,
                   ),
                   Kitchen(
                     myItems: controller.allItems
-                        .where((element) => element.category == "Kitchen")
+                        .where((element) =>
+                            element.category == "Kitchen" &&
+                            element.isAvailable == true)
                         .toList(),
                     isLoading: controller.isLoading.value,
                   ),
                   Outdoor(
                     myItems: controller.allItems
-                        .where((element) => element.category == "Outdoor")
+                        .where((element) =>
+                            element.category == "Outdoor" &&
+                            element.isAvailable == true)
                         .toList(),
                     isLoading: controller.isLoading.value,
                   ),
